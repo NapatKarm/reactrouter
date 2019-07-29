@@ -1,71 +1,48 @@
 import React, {Component} from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Home from './components/Home.js';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from './components/Home';
+import UserProfile from './components/UserProfile';
+import LogIn from './components/LogIn';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      accountBalance: 14568.27,
+      currentUser: {
+        userName: 'bob_loblaw',
+        memberSince: '08/23/99',
+      }
+    }
+  }
+
+  mockLogIn = (logInInfo) => {
+    const newUser = {...this.state.currentUser}
+    newUser.userName = logInInfo.userName
+    this.setState({currentUser: newUser})
+  }
+
+ 
+  
+
   render() {
+    const HomeComponent = () => (<Home accountBalance={this.state.accountBalance}/>);
+    const UserProfileComponent = () => (
+      <UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince}  />
+    );
+    const LogInComponent = () => (<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} />);
+    
+
     return (
       <Router>
         <div>
-          {/* <Header /> */}
-          <Switch>
-            <Route exact path="/" component={Home} />
-            {/* <Route path="/about" component={About} /> */}
-            {/* <Route path="/topics" component={Topics} /> */}
-          </Switch>
+            <Route exact path="/" render={HomeComponent} />
+            <Route exact path="/userProfile" render={UserProfileComponent}/>
+            <Route exact path="/login" render={LogInComponent}/>
         </div>
       </Router>
     );
   }
 }
-
-
-// function About() {
-//   return <h2>About</h2>;
-// }
-
-// function Topic({ match }) {
-//   return <h3>Requested Param: {match.params.id}</h3>;
-// }
-
-// function Topics({ match }) {
-//   return (
-//     <div>
-//       <h2>Topics</h2>
-
-//       <ul>
-//         <li>
-//           <Link to={`${match.url}/components`}>Components</Link>
-//         </li>
-//         <li>
-//           <Link to={`${match.url}/props-v-state`}>Props v. State</Link>
-//         </li>
-//       </ul>
-
-//       <Route path={`${match.path}/:id`} component={Topic} />
-//       <Route
-//         exact
-//         path={match.path}
-//         render={() => <h3>Please select a topic.</h3>}
-//       />
-//     </div>
-//   );
-// }
-
-// function Header() {
-//   return (
-//     <ul>
-//       <li>
-//         <Link to="/">Home</Link>
-//       </li>
-//       <li>
-//         <Link to="/about">About</Link>
-//       </li>
-//       <li>
-//         <Link to="/topics">Topics</Link>
-//       </li>
-//     </ul>
-//   );
-// }
 
 export default App;
