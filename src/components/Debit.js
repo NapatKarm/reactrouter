@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import DebitCard from './DebitCard'
 
 class Debit extends Component {
     constructor(props){
         super(props);
         this.state={
-            debits : [],
+            data : [],
             description : "",
             amount : "",
         }
@@ -19,7 +20,7 @@ class Debit extends Component {
         .then(res => {
           console.log(res.data)
           this.setState({
-            dabits : res.data,
+            data : res.data,
           })
         })
         .catch(err => {
@@ -27,7 +28,7 @@ class Debit extends Component {
         })
     }
     descChange =(event)=>{
-        this.setState({ desc : event.target.value})
+        this.setState({ description : event.target.value})
     }
     amountChange =(event)=>{
         this.setState({ amount : event.target.value})
@@ -39,16 +40,23 @@ class Debit extends Component {
         }
     this.setState(prevState => {
         return (
-            prevState.debits.push(new_data)
+            prevState.data.push(new_data)
         )
         })
         console.log({new_data})
+        this.setState({ 
+            description : "",
+            amount : ""
+        })
     }
     render() {
+        let debit = this.state.data.map((debits)=>
+        <DebitCard data = {debits}/>
+        )
       return (
           <div>
             <h1>Debits</h1>
-            <p><Link to="/">Back Home</Link></p>
+            <p2><Link to="/">Back Home</Link></p2>
             <br></br>
             
 
@@ -64,8 +72,8 @@ class Debit extends Component {
                     </label>
                     <br></br>
                 </form>
-                <button onClick={()=>this.setDebit()}>Add</button>
-
+                <button onClick={()=>this.setDebit()}>Add</button> 
+                {debit}
           </div>
       );
     }
