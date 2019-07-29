@@ -1,82 +1,60 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
 import CreditCard from './CreditCard'
+import PropTypes from 'prop-types';
 
 class Credit extends Component {
     constructor(props){
         super(props);
-        this.state={
+        this.state = {
             data : [],
             description : "",
-            amount : "",
+            amount : 0,
         }
     };
-    componentDidMount() {
-        this.grabData();
-    }
-    grabData=()=>{
-        axios.get(`https://moj-api.herokuapp.com/credits`)
-        .then(res => {
-          console.log(res.data)
-          this.setState({
-            data : res.data,
-          })
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }
+
+   
     descChange =(event)=>{
         this.setState({ description : event.target.value})
     }
+
     amountChange =(event)=>{
-        this.setState({ amount : event.target.value})
+        let num = parseFloat(event.target.value);
+        this.setState({ amount : num})
     }
-    setCredit=()=>{
-        let new_data = {
-            description : this.state.description,
-            amount : this.state.amount
-        }
-    this.setState(prevState => {
-        return (
-            prevState.data.push(new_data)
-        )
-        })
-        console.log({new_data})
-        this.setState({ 
-            description : "",
-            amount : ""
-        })
-    }
+
+    
     render() {
-        let credit = this.state.data.map((credits)=>
-        <CreditCard data = {credits}/>
+        let credit = this.props.creditData.map((credits, key)=>
+        <CreditCard data = {credits} key={key} />
         )
       return (
           <div>
             <h1>Credits</h1>
-            <p2><Link to="/">Back Home</Link></p2>
+            <p><Link to="/">Back Home</Link></p>
             <br></br>
             
-
             <form className = "form">
                     <label>
                         Description:
                         <input type="text" name="firstname" value={this.state.description} onChange={this.descChange}/>
                     </label>
-                    <br></br>
+                    
                     <label>
                         Amount:
-                        <input type="number" name="lastname" value={this.state.amount} onChange={this.amountChange} />
+                        <input type="number" name="lastname" defaultValue={this.state.amount} onChange={this.amountChange} />
                     </label>
                     <br></br>
                 </form>
-                <button onClick={()=>this.setCredit()}>Add</button> 
+                <button onClick={() => this.props.addNewCredit(this.state.description, this.state.amount)}>Add</button> 
                 {credit}
           </div>
       );
     }
   }
   
+Credit.propTypes = {
+    amount: PropTypes.number,
+}
+
   export default Credit;

@@ -6,9 +6,11 @@ class UserProfile extends Component {
     return (
         <div>
           <h1>User Profile</h1>
-          <div>Username: {this.props.userName}</div>
+          <div>Username: {this.props.user}</div>
           <div>Member Since: {this.props.memberSince}</div>
           <Link to="/">Home</Link>
+          <Link to="/debit">Debit</Link>
+          <Link to="/credit">Credit</Link>
         </div>
     );
   }

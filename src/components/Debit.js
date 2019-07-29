@@ -27,18 +27,21 @@ class Debit extends Component {
           console.log(err);
         })
     }
+
     descChange =(event)=>{
         this.setState({ description : event.target.value})
     }
+
     amountChange =(event)=>{
         this.setState({ amount : event.target.value})
     }
+
     setDebit=()=>{
         let new_data = {
             description : this.state.description,
             amount : this.state.amount
         }
-    this.setState(prevState => {
+        this.setState(prevState => {
         return (
             prevState.data.push(new_data)
         )
@@ -49,14 +52,15 @@ class Debit extends Component {
             amount : ""
         })
     }
+
     render() {
-        let debit = this.state.data.map((debits)=>
-        <DebitCard data = {debits}/>
+        let debit = this.state.data.map((debits, key)=>
+        <DebitCard data = {debits} key = {key} />
         )
       return (
           <div>
             <h1>Debits</h1>
-            <p2><Link to="/">Back Home</Link></p2>
+            <p><Link to="/">Back Home</Link></p>
             <br></br>
             
 
