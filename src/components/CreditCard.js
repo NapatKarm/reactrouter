@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import './DebitCard.css';
+import './CreditCard.css';
 
-class DebitCard extends Component {
+class CreditCard extends Component {
     constructor(props){
       super(props);
     }
@@ -19,4 +19,4 @@ class DebitCard extends Component {
 
 
 
-export default DebitCard;
+export default CreditCard;

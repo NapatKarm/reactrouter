@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-import DebitCard from './DebitCard'
+import CreditCard from './CreditCard'
 
-class Debit extends Component {
+class Credit extends Component {
     constructor(props){
         super(props);
         this.state={
@@ -16,7 +16,7 @@ class Debit extends Component {
         this.grabData();
     }
     grabData=()=>{
-        axios.get(`https://moj-api.herokuapp.com/debits`)
+        axios.get(`https://moj-api.herokuapp.com/credits`)
         .then(res => {
           console.log(res.data)
           this.setState({
@@ -33,7 +33,7 @@ class Debit extends Component {
     amountChange =(event)=>{
         this.setState({ amount : event.target.value})
     }
-    setDebit=()=>{
+    setCredit=()=>{
         let new_data = {
             description : this.state.description,
             amount : this.state.amount
@@ -50,12 +50,12 @@ class Debit extends Component {
         })
     }
     render() {
-        let debit = this.state.data.map((debits)=>
-        <DebitCard data = {debits}/>
+        let credit = this.state.data.map((credits)=>
+        <CreditCard data = {credits}/>
         )
       return (
           <div>
-            <h1>Debits</h1>
+            <h1>Credits</h1>
             <p2><Link to="/">Back Home</Link></p2>
             <br></br>
             
@@ -72,11 +72,11 @@ class Debit extends Component {
                     </label>
                     <br></br>
                 </form>
-                <button onClick={()=>this.setDebit()}>Add</button> 
-                {debit}
+                <button onClick={()=>this.setCredit()}>Add</button> 
+                {credit}
           </div>
       );
     }
   }
   
-  export default Debit;
+  export default Credit;
