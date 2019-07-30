@@ -35,7 +35,7 @@ class LogIn extends Component {
     }
 
     return (
-      <div>
+      <div className="Content">
         <form onSubmit={this.handleSubmit}>
           <div>
             <label htmlFor="userName">User Name</label>
