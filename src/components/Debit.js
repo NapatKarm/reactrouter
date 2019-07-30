@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
 import DebitCard from './DebitCard'
 
 class Debit extends Component {
@@ -12,58 +11,29 @@ class Debit extends Component {
             amount : "",
         }
     };
-    componentDidMount() {
-        this.grabData();
-    }
-    grabData=()=>{
-        axios.get(`https://moj-api.herokuapp.com/debits`)
-        .then(res => {
-          console.log(res.data)
-          this.setState({
-            data : res.data,
-          })
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }
-
+   
     descChange =(event)=>{
         this.setState({ description : event.target.value})
     }
 
     amountChange =(event)=>{
-        this.setState({ amount : event.target.value})
-    }
-
-    setDebit=()=>{
-        let new_data = {
-            description : this.state.description,
-            amount : this.state.amount
-        }
-        this.setState(prevState => {
-        return (
-            prevState.data.push(new_data)
-        )
-        })
-        console.log({new_data})
-        this.setState({ 
-            description : "",
-            amount : ""
-        })
+        let value = event.target.value;
+        value = parseFloat(value);
+        value = value.toFixed(2);
+        value = parseFloat(value);
+        this.setState({ amount : value})
     }
 
     render() {
-        let debit = this.state.data.map((debits, key)=>
+        let debit = this.props.debitData.map((debits, key)=>
         <DebitCard data = {debits} key = {key} />
         )
       return (
           <div>
             <h1>Debits</h1>
-            <p><Link to="/">Back Home</Link></p>
+            <p><Link to="/userProfile">Profile</Link></p>
             <br></br>
             
-
             <form className = "form">
                     <label>
                         Description:
@@ -76,7 +46,7 @@ class Debit extends Component {
                     </label>
                     <br></br>
                 </form>
-                <button onClick={()=>this.setDebit()}>Add</button> 
+                <button onClick={() => this.props.addNewDebit(this.state.description, this.state.amount)}>Add</button> 
                 {debit}
           </div>
       );

@@ -1,0 +1,25 @@
+.credit-container {
+    width: 100vw;
+    border-style: solid;
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    background-color: tan;
+}
+
+.credit-card-container {
+    width: 100vw;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: center;
+}
+
+input {
+    margin: 1%;
+    width: 90%;
+}
+
+button {
+    margin: 1%;
+    width: 50%;
+}

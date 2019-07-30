@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import CreditCard from './CreditCard'
+import CreditCard from './CreditCard';
+import './Credit.css';
 
 class Credit extends Component {
     constructor(props){
@@ -17,32 +18,32 @@ class Credit extends Component {
     }
 
     amountChange =(event)=>{
-        let num = parseFloat(event.target.value);
-        this.setState({ amount : num})
+        let value = event.target.value;
+        value = parseFloat(value);
+        value = value.toFixed(2);
+        value = parseFloat(value);
+        this.setState({ amount : value})
     }
 
-    
     render() {
         let credit = this.props.creditData.map((credits, key)=>
         <CreditCard data = {credits} key={key} />
         )
-      return (<div>
+      return (<div className ="credit-container">
                 <h1>Credits</h1>
-                <p> <Link to="/userProfile">Back Home</Link> </p>
-                <br></br>
+                <Link to="/userProfile">Profile</Link>
                 
                 <form className ="form">
-                        <label>
-                            <input type="text" name="firstname" value={this.state.description} onChange={this.descChange} />
-                        </label>
-                        
-                        <label>
-                            <input type="number" name="lastname" value={this.state.amount} onChange={this.amountChange} />
-                        </label>
-                    
+                    <input type="text" name="firstname" value={this.state.description} onChange={this.descChange} placeholder="Description" />
+                    <input type="number" name="lastname" value={this.state.amount} onChange={this.amountChange} placeholder="Amount" />
                 </form>
-                    <button onClick={() => this.props.addNewCredit(this.state.description, this.state.amount)}>Add</button> 
+
+                <button onClick={() => this.props.addNewCredit(this.state.description, this.state.amount)}>Add</button> 
+
+                <div className="credit-card-container">
                     {credit}
+                </div>
+                    
             </div>
       );
     }

@@ -6,9 +6,9 @@ class CreditCard extends Component {
       var Desc = this.props.data.description;
       var Amount = this.props.data.amount;
       return (
-        <div>
-          <p className ="debit">{Desc} | Costed: {Amount} </p>
-
+        <div className ="credit-card">
+          <p>{Desc}</p>
+          <p>Costed: {Amount} </p>
         </div>
       );
     }
