@@ -31,7 +31,8 @@ class Credit extends Component {
         )
       return (<div className ="credit-container">
                 <h1>Credits</h1>
-                <Link to="/userProfile">Profile</Link>
+                <p>Balance: {this.props.balance}</p>
+                <Link to="/userProfile">Back To Profile</Link>
                 
                 <form className ="form">
                     <input type="text" name="firstname" value={this.state.description} onChange={this.descChange} placeholder="Description" />

@@ -4,7 +4,7 @@
     display: grid;
     justify-items: center;
     text-align: center;
-    background-color: tan;
+    background-color: #011423;
 }
 
 .credit-card-container {
@@ -13,7 +13,12 @@
     grid-template-columns: auto auto;
     justify-items: center;
 }
-
+h1 {
+    color: #DEDEDE;
+}
+p {
+    color: #DEDEDE;
+}
 input {
     margin: 1%;
     width: 90%;
