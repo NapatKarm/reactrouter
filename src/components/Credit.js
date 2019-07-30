@@ -26,28 +26,27 @@ class Credit extends Component {
         let credit = this.props.creditData.map((credits, key)=>
         <CreditCard data = {credits} key={key} />
         )
-      return (
-          <div>
-            <h1>Credits</h1>
-            <p><Link to="/">Back Home</Link></p>
-            <br></br>
-            
-            <form className = "form">
-                    <label>
-                        <input type="text" name="firstname" value={this.state.description} onChange={this.descChange} />
-                    </label>
+      return (<div>
+                <h1>Credits</h1>
+                <p> <Link to="/userProfile">Back Home</Link> </p>
+                <br></br>
+                
+                <form className ="form">
+                        <label>
+                            <input type="text" name="firstname" value={this.state.description} onChange={this.descChange} />
+                        </label>
+                        
+                        <label>
+                            <input type="number" name="lastname" value={this.state.amount} onChange={this.amountChange} />
+                        </label>
                     
-                    <label>
-                        <input type="number" name="lastname" value={this.state.amount} onChange={this.amountChange} />
-                    </label>
-                   
-            </form>
-                <button onClick={() => this.props.addNewCredit(this.state.description, this.state.amount)}>Add</button> 
-                {credit}
-          </div>
+                </form>
+                    <button onClick={() => this.props.addNewCredit(this.state.description, this.state.amount)}>Add</button> 
+                    {credit}
+            </div>
       );
     }
-  }
+}
 
 
   export default Credit;
