@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import CreditCard from './CreditCard'
-import PropTypes from 'prop-types';
 
 class Credit extends Component {
     constructor(props){
@@ -13,7 +12,6 @@ class Credit extends Component {
         }
     };
 
-   
     descChange =(event)=>{
         this.setState({ description : event.target.value})
     }
@@ -36,25 +34,20 @@ class Credit extends Component {
             
             <form className = "form">
                     <label>
-                        Description:
-                        <input type="text" name="firstname" value={this.state.description} onChange={this.descChange}/>
+                        <input type="text" name="firstname" value={this.state.description} onChange={this.descChange} />
                     </label>
                     
                     <label>
-                        Amount:
-                        <input type="number" name="lastname" defaultValue={this.state.amount} onChange={this.amountChange} />
+                        <input type="number" name="lastname" value={this.state.amount} onChange={this.amountChange} />
                     </label>
-                    <br></br>
-                </form>
+                   
+            </form>
                 <button onClick={() => this.props.addNewCredit(this.state.description, this.state.amount)}>Add</button> 
                 {credit}
           </div>
       );
     }
   }
-  
-Credit.propTypes = {
-    amount: PropTypes.number,
-}
+
 
   export default Credit;

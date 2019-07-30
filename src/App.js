@@ -42,7 +42,8 @@ class App extends Component {
       this.setState({
         creditData : res.data,
       })
-      this.calculateCredit()
+      this.calculateCredit();
+      this.calculateInitialBalance();
     })
     .catch(err => {
       console.log(err);
@@ -55,24 +56,15 @@ class App extends Component {
         description : des,
         amount : amount,
     }
-    this.setState(prevState => {
-    return (
-        prevState.creditData.push(new_data)
-    )
-    })
 
-    this.calculateCredit();
-    
-    // console.log(des);
-    // console.log(amount);
-    // this.setState({ 
-    //     description : "",
-    //     amount : ""
-    // })
-
+    this.setState(prevState => ({
+      creditData: [...prevState.creditData, new_data],
+      accountBalance: this.state.accountBalance + new_data.amount,
+    }))
   }
 
-   // CALCULATE CREDIT
+   // INITIAL CALCULATIONS AFTER API CALL
+   // CREDIT
    calculateCredit = (e) => {
     let value = 0;
     for(let i = 0; i < this.state.creditData.length; i++) {
@@ -83,8 +75,8 @@ class App extends Component {
     })
   }
 
-  // CALCULATE ACCOUNT BALANCE
-  calculateBalance = () => {
+  // BALANCE
+  calculateInitialBalance = () => {
     this.setState({
       accountBalance: this.state.creditBalance - this.state.debitBalance,
     })
@@ -92,9 +84,7 @@ class App extends Component {
 
   render() {
     const HomeComponent = () => (<Home accountBalance={this.state.accountBalance}/>);
-    const UserProfileComponent = () => (
-      <UserProfile user={this.state.accountBalance}  />
-    );
+    const UserProfileComponent = () => (<UserProfile user={this.state.accountBalance} balance={this.state.accountBalance}  />);
     const LogInComponent = () => (<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} />);
     const DebitComponent = () => (<Debit/>);
     const CreditComponent = () => (<Credit creditData={this.state.creditData}  addNewCredit={this.addNewCredit} />);
