@@ -8,7 +8,7 @@ class CreditCard extends Component {
       return (
         <div className ="credit-card">
           <p>{Desc}</p>
-          <p>Costed: {Amount} </p>
+          <p>Costed: ${Amount} </p>
         </div>
       );
     }

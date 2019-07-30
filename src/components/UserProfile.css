@@ -1,0 +1,10 @@
+.Content {
+    width: 100vw;
+    border-style: solid;
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    background-color: #011423;
+    height: 100vh;
+    color: #DEDEDE;
+}

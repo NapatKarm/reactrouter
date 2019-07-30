@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import DebitCard from './DebitCard'
+import './CreditCard.css';
 
 class Debit extends Component {
     constructor(props){
@@ -29,25 +30,20 @@ class Debit extends Component {
         <DebitCard data = {debits} key = {key} />
         )
       return (
-          <div>
+          <div className ="credit-container">
             <h1>Debits</h1>
-            <p><Link to="/userProfile">Profile</Link></p>
+            <p>Balance: {this.props.balance}</p>
+            <p><Link to="/userProfile">Back To Profile</Link></p>
             <br></br>
             
-            <form className = "form">
-                    <label>
-                        Description:
-                        <input type="text" name="firstname" value={this.state.description} onChange={this.descChange}/>
-                    </label>
-                    <br></br>
-                    <label>
-                        Amount:
-                        <input type="number" name="lastname" value={this.state.amount} onChange={this.amountChange} />
-                    </label>
-                    <br></br>
+            <form className ="form">
+                    <input type="text" name="firstname" value={this.state.description} onChange={this.descChange} placeholder="Description" />
+                    <input type="number" name="lastname" value={this.state.amount} onChange={this.amountChange} placeholder="Amount" />
                 </form>
                 <button onClick={() => this.props.addNewDebit(this.state.description, this.state.amount)}>Add</button> 
+                <div className ="credit-card-container">
                 {debit}
+                </div>
           </div>
       );
     }
