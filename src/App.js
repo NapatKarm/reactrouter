@@ -43,7 +43,7 @@ class App extends Component {
         creditData : res.data,
       })
       this.calculateCredit();
-      this.calculateInitialBalance();
+      
     })
     .catch(err => {
       console.log(err);
@@ -59,13 +59,14 @@ class App extends Component {
 
     this.setState(prevState => ({
       creditData: [...prevState.creditData, new_data],
-      accountBalance: this.state.accountBalance + new_data.amount,
+      // accountBalance: this.state.accountBalance + new_data.amount,
     }))
+    this.calculateCredit();
   }
 
    // INITIAL CALCULATIONS AFTER API CALL
    // CREDIT
-   calculateCredit = (e) => {
+   calculateCredit = () => {
     let value = 0;
     for(let i = 0; i < this.state.creditData.length; i++) {
       value += this.state.creditData[i].amount;
@@ -73,6 +74,7 @@ class App extends Component {
     this.setState({
       creditBalance : value,
     })
+    this.calculateInitialBalance();
   }
 
   // BALANCE
