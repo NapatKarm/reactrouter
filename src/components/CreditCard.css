@@ -1,9 +1,10 @@
-.credit {
-    background-color: #0F1824;
-    color: #A1AFC3;
-    padding: 10px;
-    margin-left: 3%;
-    margin-right: 50%;
-    margin-top: 15px;
-    align-content: left;
+.credit-card {
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    width: 80%;
+    border-radius: 3%;
+    background-color: blue;
+    margin: 1%;
+    
 }

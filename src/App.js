@@ -23,6 +23,7 @@ class App extends Component {
     }
   }
 
+  // LOGIN
   mockLogIn = (logInInfo) => {
     const newUser = {...this.state.currentUser}
     newUser.userName = logInInfo.userName
@@ -30,12 +31,13 @@ class App extends Component {
   }
 
   // INITIAL MOUNTS
-
   componentDidMount() {
     this.fetchCredit();
+    this.fetchDebit();
   }
 
   // API CALLS
+  // CREDIT
   fetchCredit=()=>{
     axios.get(`https://moj-api.herokuapp.com/credits`)
     .then(res => {
@@ -48,37 +50,95 @@ class App extends Component {
     .catch(err => {
       console.log(err);
     })
-}
+  }
+
+  // DEBIT
+  fetchDebit=()=>{
+    axios.get(`https://moj-api.herokuapp.com/debits`)
+    .then(res => {
+      this.setState({
+        debitData : res.data,
+      })
+      this.calculateDebit();
+      this.calculateBalance();
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
 
 // ADDING CREDIT AND DEBIT CARDS TO DATA
+// CREDIT
   addNewCredit = (des, amount) =>{
     let new_data = {
         description : des,
         amount : amount,
     }
 
+    let num = this.state.accountBalance + new_data.amount;
+    num = num.toFixed(2);
+    num = parseFloat(num);
+
     this.setState(prevState => ({
       creditData: [...prevState.creditData, new_data],
-      accountBalance: this.state.accountBalance + new_data.amount,
+      accountBalance: num,
     }))
   }
 
-   // INITIAL CALCULATIONS AFTER API CALL
+  // DEBIT
+  addNewDebit = (des, amount) =>{
+    let new_data = {
+        description : des,
+        amount : amount,
+    }
+    let num = this.state.accountBalance - new_data.amount;
+    num = num.toFixed(2);
+    num = parseFloat(num);
+
+    this.setState(prevState => ({
+      debitData: [...prevState.debitData, new_data],
+      accountBalance: num,
+    }))
+  }
+
+  // INITIAL CALCULATIONS AFTER API CALL
+  // BALANCE
+  calculateBalance = () => {
+    let num = this.state.creditBalance - this.state.debitBalance;
+    num = num.toFixed(2);
+    num = parseFloat(num);
+    this.setState({
+      accountBalance: num,
+    })
+  }
+
    // CREDIT
    calculateCredit = () => {
     let value = 0;
     for(let i = 0; i < this.state.creditData.length; i++) {
       value += this.state.creditData[i].amount;
     }
+
+    value = value.toFixed(2);
+    value = parseFloat(value);
+  
     this.setState({
       creditBalance : value,
     })
   }
 
-  // BALANCE
-  calculateBalance = () => {
+  // DEBIT
+  calculateDebit = () => {
+    let value = 0;
+    for(let i = 0; i < this.state.debitData.length; i++) {
+      value += this.state.debitData[i].amount;
+    }
+
+    value = value.toFixed(2);
+    value = parseFloat(value);
+    
     this.setState({
-      accountBalance: this.state.creditBalance - this.state.debitBalance,
+      debitBalance : value,
     })
   }
 
@@ -86,18 +146,16 @@ class App extends Component {
     const HomeComponent = () => (<Home accountBalance={this.state.accountBalance}/>);
     const UserProfileComponent = () => (<UserProfile user={this.state.currentUser} balance={this.state.accountBalance}  />);
     const LogInComponent = () => (<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} />);
-    const DebitComponent = () => (<Debit/>);
+    const DebitComponent = () => (<Debit debitData={this.state.debitData}  addNewDebit={this.addNewDebit} />);
     const CreditComponent = () => (<Credit creditData={this.state.creditData}  addNewCredit={this.addNewCredit} />);
 
     return (
       <Router>
-        <div>
-            <Route exact path="/" render={LogInComponent} />
-            <Route exact path="/userProfile" render={UserProfileComponent}/>
-            <Route exact path="/home" render={HomeComponent}/>
-            <Route exact path="/debit" render={DebitComponent}/>
-            <Route exact path="/credit" render={CreditComponent}/>
-        </div>
+        <Route exact path="/" render={LogInComponent} />
+        <Route exact path="/userProfile" render={UserProfileComponent}/>
+        <Route exact path="/home" render={HomeComponent}/>
+        <Route exact path="/debit" render={DebitComponent}/>
+        <Route exact path="/credit" render={CreditComponent}/>
       </Router>
     );
   }

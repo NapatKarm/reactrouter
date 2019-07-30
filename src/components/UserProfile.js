@@ -12,7 +12,7 @@ class UserProfile extends Component {
           <Link to="/home">Home</Link>
           <Link to="/debit">Debit</Link>
           <Link to="/credit">Credit</Link>
-          <Link to="/">LogOut</Link>
+          {/* <Link to="/">LogOut</Link> */}
         </div>
     );
   }
